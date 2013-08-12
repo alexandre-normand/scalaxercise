@@ -1,6 +1,7 @@
 package org.scalamtl.collections
 
 import org.scalatest.FunSuite
+import scala.collection.mutable.ListBuffer
 
 class CollectionsExercises extends FunSuite {
 
@@ -34,37 +35,57 @@ class CollectionsExercises extends FunSuite {
     assert(string.toList === List('a', 'b', 'c'))
   }
 
-  ignore("check palindrome") {
+  test("check palindrome") {
     //This function returns true is the string is the same by reading forward or backward, false otherwise.
     def isPalindrome(string: String): Boolean = {
-      ???
+      string.reverse.equals(string)
     }
 
     assert(isPalindrome("hahah"))
     assert(!isPalindrome("haha"))
   }
 
-  ignore("remove duplicate elements in a list") {
+  test("remove duplicate elements in a list") {
     def removeDuplicate(list: List[Int]): List[Int] = {
-      //Should be a one liner :)
-      ???
+      list.distinct
     }
 
     val initialList = List(1, 2, 2, 3, 3)
     assert(removeDuplicate(initialList) === List(1, 2, 3))
   }
 
-  ignore("collect words with more than 3 letters") {
+  test("collect words with more than 3 letters") {
     def collectLongWords(list: List[String]): List[String] = {
-       ???
+      val longWords = ListBuffer[String]()
+      list.foreach(
+        e => if (e.length() > 3)
+          longWords.append(e)
+      )
+      longWords.toList
     }
 
     assert(collectLongWords(List("mama", "apple", "to", "two")) === List("mama", "apple"))
   }
 
-  ignore("translate numbers to english") {
+  test("translate numbers to english") {
     def toEnglish(number: Int): String = {
-      ???
+      var numberAsListOfChars = number.toString.toList
+      var translation = ""
+      numberAsListOfChars.foreach(digit => digit match {
+          case '0' => translation = translation + "-zero"
+          case '1' => translation = translation + "-one"
+          case '2' => translation = translation + "-two"
+          case '3' => translation = translation + "-three"
+          case '4' => translation = translation + "-four"
+          case '5' => translation = translation + "-five"
+          case '6' => translation = translation + "-six"
+          case '7' => translation = translation + "-seven"
+          case '8' => translation = translation + "-eight"
+          case '9' => translation = translation + "-nine"
+        }
+      )
+      // Ugly hack to get rid of the first hyphen
+      translation.tail
     }
 
     assert(toEnglish(42) === "four-two")
