@@ -56,12 +56,7 @@ class CollectionsExercises extends FunSuite {
 
   test("collect words with more than 3 letters") {
     def collectLongWords(list: List[String]): List[String] = {
-      val longWords = ListBuffer[String]()
-      list.foreach(
-        e => if (e.length() > 3)
-          longWords.append(e)
-      )
-      longWords.toList
+      list.filter(_.length > 3)
     }
 
     assert(collectLongWords(List("mama", "apple", "to", "two")) === List("mama", "apple"))
@@ -69,23 +64,19 @@ class CollectionsExercises extends FunSuite {
 
   test("translate numbers to english") {
     def toEnglish(number: Int): String = {
-      var numberAsListOfChars = number.toString.toList
-      var translation = ""
-      numberAsListOfChars.foreach(digit => digit match {
-          case '0' => translation = translation + "-zero"
-          case '1' => translation = translation + "-one"
-          case '2' => translation = translation + "-two"
-          case '3' => translation = translation + "-three"
-          case '4' => translation = translation + "-four"
-          case '5' => translation = translation + "-five"
-          case '6' => translation = translation + "-six"
-          case '7' => translation = translation + "-seven"
-          case '8' => translation = translation + "-eight"
-          case '9' => translation = translation + "-nine"
-        }
-      )
-      // Ugly hack to get rid of the first hyphen
-      translation.tail
+      val numberAsListOfChars = number.toString.toList
+      numberAsListOfChars.map(digit => digit match {
+        case '0' => "zero"
+        case '1' => "one"
+        case '2' => "two"
+        case '3' => "three"
+        case '4' => "four"
+        case '5' => "five"
+        case '6' => "six"
+        case '7' => "seven"
+        case '8' => "eight"
+        case '9' => "nine"
+      }).mkString("-")
     }
 
     assert(toEnglish(42) === "four-two")
